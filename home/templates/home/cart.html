@@ -1,0 +1,10 @@
+{% extends 'home/base.html' %}
+{% block content %}
+    cart page
+    <hr/>
+    
+    {% for item in cart %}
+        {{item}}
+    {% endfor %}
+        
+{% endblock content %}

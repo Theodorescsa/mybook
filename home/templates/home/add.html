@@ -1,0 +1,20 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+<h1>News add content</h1>
+
+<hr/>
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    
+    {% comment %} {{ form.link_image }} {% endcomment %}
+    <button type="submit" class="btn btn-primary">Them moi</button>
+
+
+
+</form>
+
+{% endblock content %}
+    

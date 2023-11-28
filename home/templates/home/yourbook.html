@@ -1,0 +1,10 @@
+{% extends 'home/base.html' %}
+{% block content %}
+    yourbook page
+    <hr/>
+    
+    {% for item in book_save %}
+        {{item}}
+    {% endfor %}
+        
+{% endblock content %}

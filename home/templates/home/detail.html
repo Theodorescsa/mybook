@@ -1,0 +1,63 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+
+  <hr/>
+  {% comment %} content start {% endcomment %}
+  <div class="container">
+    <div class="card mb-3" style="height:301px;">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img class="card-img-top rounded-0" src="{{ detail.link_image.url }}" alt="{{ detail.book_name }}" style="width: 200px; height: 300px;">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ detail.book_name }}</h5>
+                    <p class="card-text">{{ detail.description }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Author:</strong> {{ detail.author }}</li>
+                    <li class="list-group-item"><strong>Price:</strong> {{ detail.price }} $</li>
+                    <li class="list-group-item"><strong>Pages:</strong> {{ detail.quantity_page }} Pages</li>
+                </ul>
+   
+            </div>
+        </div>
+    </div>
+</div>
+
+  {% comment %} content end {% endcomment %}
+
+  {% comment %} edit {% endcomment %}
+  {% if request.user.is_superuser %}
+    <div class="text-center">
+      <a href="{% url 'home:edit' detail.id %}" class="btn btn-warning">Edit Book</a>
+    </div>
+  {% endif %}
+  {% comment %} editend {% endcomment %}
+
+  {% comment %} delete {% endcomment %}
+  {% if request.user.is_superuser %}
+    <div class="text-center">
+      <a href="{% url 'home:delete' detail.id %}" class="btn btn-danger">Delete book</a>
+    </div>
+  {% endif %}
+<div class="card-body" style="justify-content: center;margin-bottom: 10px;">
+    <div class="card-body d-flex justify-content-center">
+        <a href="" class="btn btn-primary">Buy now</a>
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'home:save_book' id=detail.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success ml-2" style="margin-left: 5px;">Save Book</button>
+            </form>
+            <form method="post" action="{% url 'home:add_to_cart' id=detail.id %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-success ml-2" style="margin-left: 5px;">Add to cart</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
+  <div class="text-center">
+    <a href="{% url 'home:home' %}" class="btn btn-secondary">Back to list book</a>
+  </div>
+{% endblock content %}

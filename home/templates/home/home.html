@@ -1,0 +1,99 @@
+{% extends 'home/base.html' %}
+{% comment %} typebook {% endcomment %}
+{% block typebook %}
+<div class="dropdown">
+  <button class="nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Type book
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="?type=Romance (Lãng mạn){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Romance (Lãng mạn)</a></li>
+    <li><a class="dropdown-item" href="?type=Novel (Tiểu thuyết){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Novel (Tiểu thuyết)</a></li>
+    <li><a class="dropdown-item" href="?type=Drama (Chính kịch){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Drama (Chính kịch)</a></li>
+    <li><a class="dropdown-item" href="?type=Humor fiction (Cười){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Humor fiction (Cười)</a></li>
+    <li><a class="dropdown-item" href="?type=Fairy tale (Cổ tích){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Fairy tale (Cổ tích)</a></li>
+    <li><a class="dropdown-item" href="?type=Fable (Ngụ ngôn){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Fable (Ngụ ngôn)</a></li>
+    <li><a class="dropdown-item" href="?type=Comics (Truyện tranh){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Tên sản phẩm</a></li>
+    <li><a class="dropdown-item" href="?type=Detective novel (Trinh thám){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Detective novel (Trinh thám)</a></li>
+    <li><a class="dropdown-item" href="?type=Horror (Kinh dị){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Detective novel (Trinh thám)</a></li>
+  
+  </ul>
+</div>
+{% endblock typebook %}
+  {% comment %} end typebook {% endcomment %}
+
+{% comment %} search book {% endcomment %}
+
+{% block search %}
+<form action="" method="get">
+  <div class="d-flex" role="search">
+    <input class="form-control me-2" type="text" name = "keyword" value = "{{keyword}}" placeholder="Search" aria-label="Search"/>
+    <button class="btn btn-outline-success" type="submit" >Search</button> 
+  </div>
+</form>
+{% endblock search %}
+
+
+{% block content %}
+{% if request.user.is_superuser%}
+<div class="d-flex justify-content-end">
+  <a href="{% url 'home:add' %}" type="button" class="btn btn-outline-secondary">Add New Book</a>
+</div>
+{% endif %}
+<div class="d-flex justify-content-end">  
+  {% comment %} dropdown sap xep start {% endcomment %}
+  <div class="dropdown">
+    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Sắp xếp
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="?sort=-birth{% for k, v in request.GET.items %}{% if k != 'sort' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Mới nhất</a></li>
+      <li><a class="dropdown-item" href="?sort=birth{% for k, v in request.GET.items %}{% if k != 'sort' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Cũ nhất</a></li>
+      <li><a class a="dropdown-item" href="?sort=book_name{% for k, v in request.GET.items %}{% if k != 'sort' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Tên sản phẩm</a></li>
+    </ul>
+  </div>
+
+</div>
+
+{% comment %} dropdown sap xep end {% endcomment %}
+<hr/>
+
+{% comment %} list content {% endcomment %}
+
+<div class="row">
+  {% for item in list_book %}
+  <div class="col-6 col-md-4 col-lg-3" style = "margin-bottom: 20px;">
+    <div class="card border" style="width: fit-content; height: fit-content; text-align: center;background-color: whitesmoke;">
+      <div class="d-flex">
+        {% if item.link_image %}  
+          <img src="{{ item.link_image.url }}" class="card-img-top" alt="..." style="width: 145.85px; height: 222.89px;">
+        {% endif %}
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <a href="{% url 'home:detail' item.id %}"><div style='font-size: small;'>{{item.book_name|truncatechars:50}}</div></a>
+          <p><div style='font-size: small;'>{{item.birth|truncatechars:50}}</div></p>
+          <p><div style='font-size: small;'>{{item.author|truncatechars:50}}</div></p>
+          <p><div style='font-size: small;'>{{item.description|truncatechars:50}}</div></p>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+<nav aria-label="...">
+  <ul class="pagination" style="display: flex;justify-content: center;">
+    <li class="page-item {% if not list_book.has_previous %}disabled{% endif %}">
+      <a class="page-link" href="?page={% if list_book.has_previous %}{{ list_book.previous_page_number }}{% for k, v in request.GET.items %}{% if k != 'page' %}&{{ k }}={{ v }}{% endif %}{% endfor %}{% endif %}">Previous</a>
+  </li>
+    <li class="page-item active" aria-current="page">
+      <a class="page-link" href="#">{{list_book.number}} / {{list_book.paginator.num_pages}}</a>
+    </li>
+    <li class="page-item {% if not list_book.has_next %}disabled{% endif %}">
+    </li>
+      <a class="page-link" href="?page={% if list_book.has_next %}{{ list_book.next_page_number }}{% for k, v in request.GET.items %}{% if k != 'page' %}&{{ k }}={{ v }}{% endif %}{% endfor %}{% endif %}">Next</a>
+    </li>
+  </ul>
+</nav>
+{% endblock content %}
