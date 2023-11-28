@@ -134,3 +134,6 @@ def cart(request):
         'cart':cart,
     }
     return render(request,'home/cart.html',context)
+
+def error(request, exception):
+    return render(request,'home/404.html')
