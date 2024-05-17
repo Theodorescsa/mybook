@@ -1,0 +1,113 @@
+{% extends 'home/base.html' %}
+{% block content %}
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+#container {
+    
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-top: 50px;
+    margin-right: 200px;
+}
+
+#chat-log {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow-y: auto;
+}
+
+#chat-message-input {
+    width: calc(100% - 20px);
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#chat-message-submit {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#chat-message-submit:hover {
+    background-color: #0056b3;
+}
+</style>
+<div class="list-group" style="width:700px;float: left;margin-top: 50px;margin-left: 200px;">
+    <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+      Những group từng liên hệ
+    </a>
+    {% for item in list_room %}
+    <a href="http://127.0.0.1:8000/chatapp/{{item.room_name}}/" class="list-group-item list-group-item-action" style="height: 60px;">{{item.room_name}}</a>
+
+    {% endfor %}
+
+  </div>
+<div id="container">
+<textarea id="chat-log" cols="100" rows="10">{% for message in messages %}
+    {{message.user.username}}:{{message.message}}
+{% endfor %}</textarea><br>
+<input id="chat-message-input" type="text" placeholder="Type your message here"><br>
+<input id="chat-message-submit" type="button" value="Send">
+{{ room_name|json_script:"room-name" }}
+</div>
+<script>
+const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+const chatSocket = new WebSocket(
+    'ws://'
+    + window.location.host
+    + '/ws/chatapp/'
+    + roomName
+    + '/'
+);
+
+chatSocket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    document.querySelector('#chat-log').value += (data.message + '\n');
+};
+
+chatSocket.onclose = function(e) {
+    console.error('Chat socket closed unexpectedly');
+};
+
+document.querySelector('#chat-message-input').focus();
+document.querySelector('#chat-message-input').onkeyup = function(e) {
+    if (e.keyCode === 13) {  // enter, return
+        document.querySelector('#chat-message-submit').click();
+    }
+};
+
+document.querySelector('#chat-message-submit').onclick = function(e) {
+    const messageInputDom = document.querySelector('#chat-message-input');
+    const message = messageInputDom.value;
+    chatSocket.send(JSON.stringify({
+        'message': message
+    }));
+    messageInputDom.value = '';
+};
+</script>
+
+{% endblock content %}

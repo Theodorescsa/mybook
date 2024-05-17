@@ -1,0 +1,11 @@
+{% extends 'home/base.html' %}
+{% block content %}
+    Booksaved is here
+    <hr/>
+    
+    {% for item in book_save %}
+        {{item}}
+        <br>
+    {% endfor %}
+        
+{% endblock content %}

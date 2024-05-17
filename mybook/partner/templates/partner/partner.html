@@ -1,0 +1,10 @@
+{% extends "home/base.html" %}
+{% block content %}
+Partner Page
+<hr/>
+{% for item in partners %}
+Company:{{item.name_company}}
+<br>
+Description:{{item.description}}
+{% endfor %}
+{% endblock content %}

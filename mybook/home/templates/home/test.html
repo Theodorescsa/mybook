@@ -1,0 +1,131 @@
+<!DOCTYPE html> 
+<html> 
+  
+<head> 
+    <title>Autoplay Carousel</title> 
+    <link rel="stylesheet" href="style.css"> 
+    <style>
+        
+* { 
+    box-sizing: border-box; 
+} 
+  
+body { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+} 
+  
+.carousel { 
+    position: relative; 
+    width: 100vw; 
+    height: 160px; 
+    overflow: hidden; 
+    background-color: #cdcdcd; 
+} 
+  
+.carousel-item .slide-image { 
+    width: 270px; 
+    height: 160px; 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+} 
+  
+.carousel-item { 
+    position: absolute; 
+    width: 100%; 
+    height: 270px; 
+    border: none; 
+    top: 0; 
+    left: 100%; 
+} 
+  
+.carousel-item.active { 
+    left: 0; 
+    transition: all 0.3s ease-out; 
+} 
+  
+.carousel-item div { 
+    height: 100%; 
+} 
+  
+.red { 
+    background-color: red; 
+} 
+  
+.green { 
+    background-color: green; 
+} 
+  
+.yellow { 
+    background-color: yellow; 
+} 
+  
+.violet { 
+    background-color: violet; 
+}
+    </style>
+</head> 
+  
+<body> 
+    <div class="carousel"> 
+        <div class="carousel-item"> 
+            <div class="slide-image"
+                style="background-image:  
+url('https://media.geeksforgeeks.org/img-practice/banner/mern-full-stack-development-classroom-thumbnail.png?v=19625');"> 
+            </div> 
+        </div> 
+        <div class="carousel-item"> 
+            <div class="slide-image"
+                style="background-image:  
+url('https://media.geeksforgeeks.org/img-practice/banner/dsa-to-development-coding-guide-thumbnail.png?v=19625');"> 
+            </div> 
+        </div> 
+        <div class="carousel-item"> 
+            <div class="slide-image"
+                style="background-image:  
+url('https://media.geeksforgeeks.org/img-practice/banner/geeks-classes-live-thumbnail.png?v=19625');"> 
+            </div> 
+        </div> 
+        <div class="carousel-item"> 
+            <div class="slide-image"
+                style="background-image:  
+url('https://media.geeksforgeeks.org/img-practice/banner/gate-crash-course-2024-thumbnail.png?v=19625');"> 
+            </div> 
+        </div> 
+    </div> 
+  
+    <script>
+        
+window.onload = function () { 
+    let slides =  
+        document.getElementsByClassName('carousel-item'); 
+  
+    function addActive(slide) { 
+        slide.classList.add('active'); 
+    } 
+  
+    function removeActive(slide) { 
+        slide.classList.remove('active'); 
+    } 
+  
+    addActive(slides[0]); 
+    setInterval(function () { 
+        for (let i = 0; i < slides.length; i++) { 
+            if (i + 1 == slides.length) { 
+                addActive(slides[0]); 
+                setTimeout(removeActive, 350, slides[i]); 
+                break; 
+            } 
+            if (slides[i].classList.contains('active')) { 
+                setTimeout(removeActive, 350, slides[i]); 
+                addActive(slides[i + 1]); 
+                break; 
+            } 
+        } 
+    }, 1500); 
+};
+    </script> 
+</body> 
+  
+</html>

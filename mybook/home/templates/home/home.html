@@ -1,0 +1,216 @@
+{% extends 'home/base.html' %}
+
+{% comment %} typebook {% endcomment %}
+
+{% block typebook %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+<div class="dropdown">
+
+  <button class="nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Type book
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="?type=Romance (Lãng mạn){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Romance (Lãng mạn)</a></li>
+    <li><a class="dropdown-item" href="?type=Novel (Tiểu thuyết){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Novel (Tiểu thuyết)</a></li>
+    <li><a class="dropdown-item" href="?type=Drama (Chính kịch){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Drama (Chính kịch)</a></li>
+    <li><a class="dropdown-item" href="?type=Humor fiction (Cười){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Humor fiction (Cười)</a></li>
+    <li><a class="dropdown-item" href="?type=Fairy tale (Cổ tích){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Fairy tale (Cổ tích)</a></li>
+    <li><a class="dropdown-item" href="?type=Fable (Ngụ ngôn){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Fable (Ngụ ngôn)</a></li>
+    <li><a class="dropdown-item" href="?type=Comics (Truyện tranh){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Tên sản phẩm</a></li>
+    <li><a class="dropdown-item" href="?type=Detective novel (Trinh thám){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Detective novel (Trinh thám)</a></li>
+    <li><a class="dropdown-item" href="?type=Horror (Kinh dị){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Horror (Kinh dị)</a></li>
+  
+  </ul>
+</div>
+{% endblock typebook %}
+  {% comment %} end typebook {% endcomment %}
+
+{% comment %} search book {% endcomment %}
+
+{% block search %}
+
+<style>
+  .cart-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    transform: translate(50%, -50%);
+  }
+
+  .fa {
+    position: relative;
+    font-size: 48px;
+    color: red;
+  }
+</style>
+
+<div style="position:relative;margin-right: 20px;">
+
+  <a href="{% url 'cart:cart'  %}"><i class="fa fa-shopping-cart" style="font-size:30px"></i></a>
+
+  <span class="cart-badge">{{total}}</span>
+</div>
+
+<form action="" method="get">
+  <div class="d-flex" role="search">
+    <input class="form-control me-2" type="text" name = "keyword" value = "{{keyword}}" placeholder="Search" aria-label="Search"/>
+    <button class="btn btn-outline-success" type="submit" >Search</button> 
+  </div>
+</form>
+<a href="{% url 'chatapp:list_room' %}"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chat-text" viewBox="0 0 16 16" style="margin: 20px 20px;">
+  <path d="M2.678 11.894a1 1 0 0 1 .287.801 11 11 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8 8 0 0 0 8 14c3.996 0 7-2.807 7-6s-3.004-6-7-6-7 2.808-7 6c0 1.468.617 2.83 1.678 3.894m-.493 3.905a22 22 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a10 10 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105"/>
+  <path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8m0 2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5"/>
+</svg></a>
+{% if request.user.is_superuser%}
+<div class="d-flex justify-content-end">
+  <a href="{% url 'home:add' %}" type="button" class="btn btn-outline-secondary">Add New Book here</a>
+</div>
+{% endif %}
+<div class="d-flex justify-content-end">  
+  {% comment %} dropdown sap xep start {% endcomment %}
+  <div class="dropdown">
+    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Sắp xếp
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="?sort=-birth{% for k, v in request.GET.items %}{% if k != 'sort' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Mới nhất</a></li>
+      <li><a class="dropdown-item" href="?sort=birth{% for k, v in request.GET.items %}{% if k != 'sort' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Cũ nhất</a></li>
+      <li><a class a="dropdown-item" href="?sort=book_name{% for k, v in request.GET.items %}{% if k != 'sort' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Tên sản phẩm</a></li>
+    </ul>
+  </div>
+
+</div>
+
+{% endblock search %}
+
+{% block theme %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+{% load static %}
+
+
+<main>
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+      </div>
+
+      <!-- Image Sliders -->
+      <div class="carousel-inner">
+      <!-- Image one-->
+        <div class="carousel-item active">
+          <img src="https://user-images.githubusercontent.com/78242022/273443252-b034e050-3d70-48ef-9f0f-2d77ef9b2604.jpg" class="d-block w-100" alt="...">
+        </div>
+
+        <!-- image two -->
+        <div class="carousel-item">
+          <img src="https://user-images.githubusercontent.com/78242022/273443248-130249b5-87b7-423d-9281-48d810bcd30d.jpg" class="d-block w-100" alt="...">
+        </div>
+
+        <!-- Image Three -->
+        <div class="carousel-item">
+          <img src="https://user-images.githubusercontent.com/78242022/273443248-130249b5-87b7-423d-9281-48d810bcd30d.jpg" class="d-block w-100" alt="...">
+        </div>
+
+        <!-- Image Four -->
+        <div class="carousel-item">
+          <img src="https://user-images.githubusercontent.com/78242022/273443251-9c210d6f-35ba-4861-885e-9b2e684ab339.jpg" class="d-block w-100" alt="...">
+        </div>
+
+        <!-- Image Five -->
+        <div class="carousel-item">
+          <img src="https://user-images.githubusercontent.com/78242022/273443251-9c210d6f-35ba-4861-885e-9b2e684ab339.jpg" class="d-block w-100" alt="...">
+        </div>
+      </div>
+
+      <!-- Carousel Controls -->
+     <section>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+     </section>
+    </div>
+</main>
+{% comment %} <script src="{% static 'js/theme.js' %}"></script> {% endcomment %}
+
+
+{% endblock theme %}
+
+{% block content %}
+<hr>
+<div class="row" style="margin-right: 400px; float: left;">
+  {% for item in list_book %}
+  <div class="col-8 col-md-4 col-lg-3" style="margin-bottom: 20px;">
+    <div class="card border" style="width: fit-content; height: fit-content; text-align: center; background-color: whitesmoke;">
+      <div class="d-flex">
+        {% if item.link_image %}
+        <img src="{{ item.link_image.url }}" class="card-img-top book-image" alt="..." style="width: 145.85px; height: 222.89px;">
+        {% endif %}
+        <div class="d-flex flex-column justify-content-center align-items-center book-info">
+          <a href="{% url 'home:detail' item.id %}">
+            <div style='font-size: small;'>{{item.book_name|truncatechars:50}}</div>
+          </a>
+          <p><div style='font-size: small;'>{{item.birth|truncatechars:50}}</div></p>
+          <p><div style='font-size: small;'>{{item.author|truncatechars:50}}</div></p>
+          <p><div style='font-size: small;'>{{item.description|truncatechars:50|safe}}</div></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<ul class="list-group" style="width: fit-content;float: right;margin-top: -100px;">
+  <h2><b>Hot books</b></h2>
+  {% for item in list_book|slice:":3" %}
+    <li class="list-group-item">
+      <div class="col-8 col-md-4 col-lg-3" style="margin-bottom: 20px;">
+        <div class="card border" style="width: fit-content; height: fit-content; text-align: center; background-color: whitesmoke;">
+          {% if item.link_image %}
+            <img src="{{ item.link_image.url }}" class="card-img-top" alt="..." style="width: 145.85px; height: 222.89px;">
+          {% endif %}
+          <div class="d-flex flex-column justify-content-center align-items-center">
+            <a href="{% url 'home:detail' item.id %}">
+              <div style='font-size: small;'>{{ item.book_name|truncatechars:50 }}</div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </li>
+  {% endfor %}
+</ul>
+<nav aria-label="..." style="clear: both;">
+  <ul class="pagination" style="display: flex;justify-content: center;">
+    <li class="page-item {% if not list_book.has_previous %}disabled{% endif %}">
+      <a class="page-link" href="?page={% if list_book.has_previous %}{{ list_book.previous_page_number }}{% for k, v in request.GET.items %}{% if k != 'page' %}&{{ k }}={{ v }}{% endif %}{% endfor %}{% endif %}">Previous</a>
+  </li>
+    <li class="page-item active" aria-current="page">
+      <a class="page-link" href="#">{{list_book.number}} / {{list_book.paginator.num_pages}}</a>
+    </li>
+    <li class="page-item {% if not list_book.has_next %}disabled{% endif %}">
+    </li>
+      <a class="page-link" href="?page={% if list_book.has_next %}{{ list_book.next_page_number }}{% for k, v in request.GET.items %}{% if k != 'page' %}&{{ k }}={{ v }}{% endif %}{% endfor %}{% endif %}">Next</a>
+    </li>
+  </ul>
+</nav>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+{% endblock content %}

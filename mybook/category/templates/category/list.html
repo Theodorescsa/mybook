@@ -1,0 +1,13 @@
+{% extends "home/base.html" %}
+{% block content %}
+{% comment %} <form action="" method="get">
+    {% csrf_token %}
+    {% for item in category_list %}
+<br>
+<a href="">{{ item.category_name }}</a>
+
+{% endfor %}
+</form> {% endcomment %}
+{{category_list.category_name}}
+
+{% endblock content %}

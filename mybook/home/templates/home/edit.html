@@ -1,0 +1,17 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+<h1>News edit content</h1>
+
+<hr/>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Cap nhat</button>
+
+</form>
+
+
+{% endblock content %}
+    
