@@ -10,6 +10,8 @@ urlpatterns = [
    path('save_book/<int:id>/', views.save_book, name='save_book'),
    path('yourbook/',views.yourbook,name = 'yourbook'),
    path('add_to_cart/<int:id>/',views.add_to_cart,name = 'add_to_cart'),
+   path('buynow/<int:id>/',views.buynow,name = 'buynow'),
+   
    path('raing/<int:id>/', views.rating, name='rating'),
    path('get_post_api/', views.get_post_api, name="get_post_api"),
 ]

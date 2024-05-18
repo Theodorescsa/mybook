@@ -56,11 +56,17 @@ def home(request):
     except EmptyPage:
         book_list_paging = book_list_paging.get_page(book_list_paging.num_pages)
     if request.user.username:
+        total = 0
         user = User.objects.get(username = request.user.username)
-        orders = OrderModel.objects.filter(
+        orders = OrderModel.objects.get(
             customer = user
         )
-        total = len(orders)
+        orders_detail = OrderDetailModel.objects.filter(
+                order = orders
+        )
+        total = orders_detail.count()
+
+      
     else:
         total = ""
     context = {
@@ -185,9 +191,11 @@ def add_to_cart(request,id):
     context = {
         
     }
-    return HttpResponse("add success")
+    return redirect("cart:cart")
     # return render(request,'home/detail.html',context)
-    
+def buynow(request,id):
+    add_to_cart(request,id)
+    return redirect("cart:cart")
 def rating(request, id):
     point = request.POST.get('point')
     comment = request.POST.get('comment')
