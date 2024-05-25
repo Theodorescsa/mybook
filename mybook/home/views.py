@@ -55,7 +55,8 @@ def home(request):
         book_list_paging = book_list_paging.get_page(1)
     except EmptyPage:
         book_list_paging = book_list_paging.get_page(book_list_paging.num_pages)
-    if request.user.username:
+    
+    try:
         total = 0
         user = User.objects.get(username = request.user.username)
         orders = OrderModel.objects.get(
@@ -66,9 +67,10 @@ def home(request):
         )
         total = orders_detail.count()
 
-      
-    else:
+    except:
         total = ""
+  
+  
     context = {
         'total':total,
         'list_book':book_list_paging,

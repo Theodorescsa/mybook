@@ -10,7 +10,7 @@ def index(request):
     return render(request, "chatapp/index.html")
 @login_required(login_url=settings.LOGIN_URL)
 def room(request, room_name):
-    room_chat = ChatModel.objects.get(room_name = room_name)
+    room_chat,created = ChatModel.objects.get_or_create(room_name = room_name)
     user = User.objects.get(username = request.user.username)
     list_room_chat = MessageModel.objects.filter(
         user = user
