@@ -1,14 +1,8 @@
 {% extends 'home/base.html' %}
-
 {% comment %} typebook {% endcomment %}
-
 {% block typebook %}
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 <div class="dropdown">
-
   <button class="nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
     Type book
   </button>
@@ -22,7 +16,6 @@
     <li><a class="dropdown-item" href="?type=Comics (Truyện tranh){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Tên sản phẩm</a></li>
     <li><a class="dropdown-item" href="?type=Detective novel (Trinh thám){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Detective novel (Trinh thám)</a></li>
     <li><a class="dropdown-item" href="?type=Horror (Kinh dị){% for k, v in request.GET.items %}{% if k != 'type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Horror (Kinh dị)</a></li>
-  
   </ul>
 </div>
 {% endblock typebook %}
@@ -32,7 +25,7 @@
 
 {% block search %}
 
-<style>
+{% comment %} <style>
   .cart-badge {
     position: absolute;
     top: 0;
@@ -51,7 +44,7 @@
     font-size: 48px;
     color: red;
   }
-</style>
+</style> {% endcomment %}
 
 <div style="position:relative;margin-right: 20px;">
 
@@ -178,7 +171,7 @@
   </div>
   {% endfor %}
 </div>
-<ul class="list-group" style="width: fit-content;float: right;margin-top: -100px;">
+<ul class="list-group">
   <h2><b>Hot books</b></h2>
   {% for item in list_book|slice:":3" %}
     <li class="list-group-item">
